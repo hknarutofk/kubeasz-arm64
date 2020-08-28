@@ -1,6 +1,7 @@
 FROM docker:18.06.1 as docker
 FROM python:3.6
-
+ADD 163-sources.list /etc/apt/sources.list
+ADD aliyun-pip.conf /root/.pip/pip.conf
 RUN set -ex; \
     apt-get update -qq; \
     apt-get install -y \
@@ -25,7 +26,7 @@ ADD .pre-commit-config.yaml /code/
 ADD setup.py /code/
 ADD tox.ini /code/
 ADD compose /code/compose/
-RUN tox --notest
+RUN tox --notest -i https://mirrors.aliyun.com/pypi/simple
 
 ADD . /code/
 RUN chown -R user /code/

@@ -9,6 +9,6 @@ yum install golang -y
 )
 
 (
-	cd compose-1.23.2/
+	cd docker-compose-1.23.2 
 	sh script/build/linux
 )
