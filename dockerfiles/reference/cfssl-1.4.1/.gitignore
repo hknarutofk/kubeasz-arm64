@@ -1,0 +1,7 @@
+dist/*
+cli/serve/static.rice-box.go
+coverage.txt
+profile.out
+bin
+*.deb
+*.rpm

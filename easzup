@@ -148,7 +148,7 @@ function get_k8s_bin() {
   echo -e "[INFO] \033[33mdownloading kubernetes\033[0m $K8S_BIN_VER binaries"
   docker pull registry.cn-hangzhou.aliyuncs.com/hknaruto/easzlab-kubeasz-k8s-bin:${K8S_BIN_VER} && \
   echo "[INFO] run a temporary container" && \
-  docker run -d --name temp_k8s_bin easzlab/kubeasz-k8s-bin:${K8S_BIN_VER} && \
+  docker run -d --name temp_k8s_bin registry.cn-hangzhou.aliyuncs.com/hknaruto/easzlab-kubeasz-k8s-bin:${K8S_BIN_VER} && \
   echo "[INFO] cp k8s binaries" && \
   docker cp temp_k8s_bin:/k8s /k8s_bin_tmp && \
   /bin/mv -f /k8s_bin_tmp/* /etc/ansible/bin && \
@@ -161,7 +161,7 @@ function get_ext_bin() {
   [[ -f "/etc/ansible/bin/etcdctl" ]] && { echo "[WARN] extral binaries existed"; return 0; }
 
   echo -e "[INFO] \033[33mdownloading extral binaries\033[0m kubeasz-ext-bin:$EXT_BIN_VER"
-  docker pull easzlab/kubeasz-ext-bin:${EXT_BIN_VER} && \
+  docker pull registry.cn-hangzhou.aliyuncs.com/hknaruto/easzlab-kubeasz-ext-bin:${EXT_BIN_VER} && \
   echo "[INFO] run a temporary container" && \
   docker run -d --name temp_ext_bin registry.cn-hangzhou.aliyuncs.com/hknaruto/easzlab-kubeasz-ext-bin:${EXT_BIN_VER} && \
   echo "[INFO] cp extral binaries" && \
@@ -191,7 +191,7 @@ function get_offline_image() {
   corednsVer=1.6.7
   dashboardVer=v2.0.1
   dashboardMetricsScraperVer=v1.0.4
-  flannelVer=v0.12.0-amd64
+  flannelVer=v0.12.0
   metricsVer=v0.3.6
   pauseVer=3.2
 
@@ -216,25 +216,25 @@ function get_offline_image() {
     docker save -o ${imageDir}/dashboard_${dashboardVer}.tar kubernetesui/dashboard:${dashboardVer}
   fi
   if [[ ! -f "$imageDir/flannel_$flannelVer.tar" ]];then
-    docker pull easzlab/flannel:${flannelVer} && \
-    docker save -o ${imageDir}/flannel_${flannelVer}.tar easzlab/flannel:${flannelVer}
+    docker pull kubesphere/flannel:${flannelVer} && \
+    docker save -o ${imageDir}/flannel_${flannelVer}.tar kubesphere/flannel:${flannelVer}
   fi
   if [[ ! -f "$imageDir/metrics-scraper_$dashboardMetricsScraperVer.tar" ]];then
     docker pull kubernetesui/metrics-scraper:${dashboardMetricsScraperVer} && \
     docker save -o ${imageDir}/metrics-scraper_${dashboardMetricsScraperVer}.tar kubernetesui/metrics-scraper:${dashboardMetricsScraperVer}
   fi
   if [[ ! -f "$imageDir/metrics-server_$metricsVer.tar" ]];then
-    docker pull mirrorgooglecontainers/metrics-server-amd64:${metricsVer} && \
-    docker save -o ${imageDir}/metrics-server_${metricsVer}.tar mirrorgooglecontainers/metrics-server-amd64:${metricsVer}
+    docker pull mirrorgooglecontainers/metrics-server-arm64:${metricsVer} && \
+    docker save -o ${imageDir}/metrics-server_${metricsVer}.tar mirrorgooglecontainers/metrics-server-arm64:${metricsVer}
   fi
   if [[ ! -f "$imageDir/pause_$pauseVer.tar" ]];then
-    docker pull easzlab/pause-amd64:${pauseVer} && \
-    docker save -o ${imageDir}/pause_${pauseVer}.tar easzlab/pause-amd64:${pauseVer}
+    docker pull r6w9c7qa.mirror.aliyuncs.com/kubesphere/pause:${pauseVer} && \
+    docker save -o ${imageDir}/pause_${pauseVer}.tar r6w9c7qa.mirror.aliyuncs.com/kubesphere/pause:${pauseVer}
     /bin/cp -u "${imageDir}/pause_${pauseVer}.tar" "${imageDir}/pause.tar"
   fi
   if [[ ! -f "$imageDir/kubeasz_$KUBEASZ_VER.tar" ]];then
-    docker pull easzlab/kubeasz:${KUBEASZ_VER} && \
-    docker save -o ${imageDir}/kubeasz_${KUBEASZ_VER}.tar easzlab/kubeasz:${KUBEASZ_VER}
+    docker pull registry.cn-hangzhou.aliyuncs.com/hknaruto/easzlab-kubeasz:${KUBEASZ_VER} && \
+    docker save -o ${imageDir}/kubeasz_${KUBEASZ_VER}.tar registry.cn-hangzhou.aliyuncs.com/hknaruto/easzlab-kubeasz:${KUBEASZ_VER}
   fi
 }
 

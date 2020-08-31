@@ -17,9 +17,9 @@ ENV ETCD_VER=v3.4.3 \
 ADD bandwidth bandwidth
 ADD bridge bridge
 ADD calicoctl-linux-arm64 calicoctl-linux-arm64
-ADD cfssl-certinfo_linux-arm cfssl-certinfo_linux-arm
-ADD cfssljson_linux-arm cfssljson_linux-arm
-ADD cfssl_linux-arm cfssl_linux-arm
+ADD cfssl-certinfo cfssl-certinfo
+ADD cfssljson cfssljson
+ADD cfssl cfssl
 ADD dhcp dhcp
 ADD docker-compose-Linux-aarch64 docker-compose-Linux-aarch64
 ADD etcd etcd
@@ -44,9 +44,9 @@ RUN mkdir -p /extra && \
     cp etcd /extra/etcd && \
     cp etcdctl /extra/etcdctl && \
     \    
-    cp cfssl_linux-arm /extra/cfssl && \
-    cp cfssljson_linux-arm /extra/cfssljson && \
-    cp cfssl-certinfo_linux-arm /extra/cfssl-certinfo && \
+    cp cfssl /extra/cfssl && \
+    cp cfssljson /extra/cfssljson && \
+    cp cfssl-certinfo /extra/cfssl-certinfo && \
     \    
     cp bridge flannel host-local loopback portmap tuning /extra && \
     \
