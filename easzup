@@ -126,7 +126,7 @@ function get_kubeasz() {
 
   echo -e "[INFO] \033[33mdownloading kubeasz\033[0m $KUBEASZ_VER"
   echo "[INFO] run a temporary container"
-  docker run -d --name temp_easz easzlab/kubeasz:${KUBEASZ_VER} || { echo "[ERROR] download failed."; exit 1; }
+  docker run -d --name temp_easz registry.cn-hangzhou.aliyuncs.com/hknaruto/easzlab-kubeasz:${KUBEASZ_VER} || { echo "[ERROR] download failed."; exit 1; }
 
   [[ -f "/etc/ansible/down/docker-${DOCKER_VER}.tgz" ]] && /bin/mv -f "/etc/ansible/down/docker-${DOCKER_VER}.tgz" /tmp
   [[ -d "/etc/ansible/bin" ]] && /bin/mv -f /etc/ansible/bin /tmp
@@ -146,7 +146,7 @@ function get_k8s_bin() {
   [[ -f "/etc/ansible/bin/kubelet" ]] && { echo "[WARN] kubernetes binaries existed"; return 0; }
   
   echo -e "[INFO] \033[33mdownloading kubernetes\033[0m $K8S_BIN_VER binaries"
-  docker pull easzlab/kubeasz-k8s-bin:${K8S_BIN_VER} && \
+  docker pull registry.cn-hangzhou.aliyuncs.com/hknaruto/easzlab-kubeasz-k8s-bin:${K8S_BIN_VER} && \
   echo "[INFO] run a temporary container" && \
   docker run -d --name temp_k8s_bin easzlab/kubeasz-k8s-bin:${K8S_BIN_VER} && \
   echo "[INFO] cp k8s binaries" && \
@@ -163,7 +163,7 @@ function get_ext_bin() {
   echo -e "[INFO] \033[33mdownloading extral binaries\033[0m kubeasz-ext-bin:$EXT_BIN_VER"
   docker pull easzlab/kubeasz-ext-bin:${EXT_BIN_VER} && \
   echo "[INFO] run a temporary container" && \
-  docker run -d --name temp_ext_bin easzlab/kubeasz-ext-bin:${EXT_BIN_VER} && \
+  docker run -d --name temp_ext_bin registry.cn-hangzhou.aliyuncs.com/hknaruto/easzlab-kubeasz-ext-bin:${EXT_BIN_VER} && \
   echo "[INFO] cp extral binaries" && \
   docker cp temp_ext_bin:/extra /extra_bin_tmp && \
   /bin/mv -f /extra_bin_tmp/* /etc/ansible/bin && \

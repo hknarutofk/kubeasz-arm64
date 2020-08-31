@@ -4,6 +4,4 @@
 # packaging so that `docker-compose version` can include the git sha.
 #
 set -e
-# git rev-parse --short HEAD > compose/GITSHA
-echo "b0c10cb" > compose/GITSHA
-
+git rev-parse --short HEAD > compose/GITSHA

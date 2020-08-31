@@ -3,6 +3,7 @@
 # @author:  gjmzj
 # @repo:    https://github.com/kubeasz/dockerfiles/kubeasz-ext-bin
 # @ref:     https://github.com/easzlab/kubeasz
+# 由于访问国外网络较为困难，方案调整为容器内保留资源，方便国内用户从容器中获得对应程序文件
 
 FROM alpine:3.9
 
@@ -12,36 +13,48 @@ ENV ETCD_VER=v3.4.3 \
     DOCKER_COMPOSE_VER=1.23.2 \
     CALICOCTL_VER=v3.8.8 \
     EXT_BIN_VER=0.5.2
+
+ADD bandwidth bandwidth
+ADD bridge bridge
+ADD calicoctl-linux-arm64 calicoctl-linux-arm64
+ADD cfssl-certinfo_linux-arm cfssl-certinfo_linux-arm
+ADD cfssljson_linux-arm cfssljson_linux-arm
+ADD cfssl_linux-arm cfssl_linux-arm
+ADD dhcp dhcp
+ADD docker-compose-Linux-aarch64 docker-compose-Linux-aarch64
+ADD etcd etcd
+ADD etcdctl etcdctl
+ADD firewall firewall
+ADD flannel flannel
+ADD helm helm
+ADD host-device host-device
+ADD host-local host-local
+ADD ipvlan ipvlan
+ADD loopback loopback
+ADD macvlan macvlan
+ADD portmap portmap
+ADD ptp ptp
+ADD sbr sbr
+ADD static static
+ADD tuning tuning
+ADD vlan vlan
      
 RUN mkdir -p /extra && \
     \
-    wget https://github.com/etcd-io/etcd/releases/download/$ETCD_VER/etcd-$ETCD_VER-linux-aarch64.tar.gz && \
-    tar zxf etcd-$ETCD_VER-linux-aarch64.tar.gz && \
-    cd etcd-$ETCD_VER-linux-aarch64 && \
-    mv etcd etcdctl /extra && \
-    cd / && rm -rf etcd-$ETCD_VER-linux-aarch64* && \
+    cp etcd /extra/etcd && \
+    cp etcdctl /extra/etcdctl && \
+    \    
+    cp cfssl_linux-arm /extra/cfssl && \
+    cp cfssljson_linux-arm /extra/cfssljson && \
+    cp cfssl-certinfo_linux-arm /extra/cfssl-certinfo && \
+    \    
+    cp bridge flannel host-local loopback portmap tuning /extra && \
     \
-    wget https://pkg.cfssl.org/R1.2/cfssl_linux-aarch64 && \
-    wget https://pkg.cfssl.org/R1.2/cfssljson_linux-aarch64 && \
-    wget https://pkg.cfssl.org/R1.2/cfssl-certinfo_linux-aarch64 && \
-    mv cfssl_linux-aarch64 /extra/cfssl && \
-    mv cfssljson_linux-aarch64 /extra/cfssljson && \
-    mv cfssl-certinfo_linux-aarch64 /extra/cfssl-certinfo && \
+    cp helm /extra && \
+    \    
+    cp docker-compose-Linux-aarch64 /extra/docker-compose && \
     \
-    wget https://github.com/containernetworking/plugins/releases/download/$CNI_VER/cni-plugins-linux-aarch64-$CNI_VER.tgz && \
-    mkdir /cni && tar zxf cni-plugins-linux-aarch64-$CNI_VER.tgz -C /cni && \
-    cd /cni && mv bridge flannel host-local loopback portmap tuning /extra && \
-    cd / && rm -rf cni* && \
-    \
-    wget https://get.helm.sh/helm-$HELM_VER-linux-aarch64.tar.gz && \
-    tar zxf helm-$HELM_VER-linux-aarch64.tar.gz && \
-    mv linux-aarch64/helm /extra && \
-    rm -rf linux-aarch64 helm-$HELM_VER-linux-aarch64.tar.gz && \
-    \
-    wget https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VER/docker-compose-Linux-x86_64 && \
-    mv docker-compose-Linux-x86_64 /extra/docker-compose && \
-    \
-    wget https://github.com/projectcalico/calicoctl/releases/download/$CALICOCTL_VER/calicoctl-linux-aarch64 && \
-    mv calicoctl-linux-aarch64 /extra/calicoctl
+    cp calicoctl-linux-arm64 /extra/calicoctl
 
 CMD [ "sleep", "360000000" ]
+
