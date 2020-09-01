@@ -212,24 +212,24 @@ function get_offline_image() {
     docker save -o ${imageDir}/coredns_${corednsVer}.tar coredns/coredns:${corednsVer}
   fi
   if [[ ! -f "$imageDir/dashboard_$dashboardVer.tar" ]];then
-    docker pull kubernetesui/dashboard:${dashboardVer} && \
-    docker save -o ${imageDir}/dashboard_${dashboardVer}.tar kubernetesui/dashboard:${dashboardVer}
+    docker pull kubernetesui/dashboard-arm64:${dashboardVer} && \
+    docker save -o ${imageDir}/dashboard_${dashboardVer}.tar kubernetesui/dashboard-arm64:${dashboardVer}
   fi
   if [[ ! -f "$imageDir/flannel_$flannelVer.tar" ]];then
     docker pull kubesphere/flannel:${flannelVer} && \
     docker save -o ${imageDir}/flannel_${flannelVer}.tar kubesphere/flannel:${flannelVer}
   fi
   if [[ ! -f "$imageDir/metrics-scraper_$dashboardMetricsScraperVer.tar" ]];then
-    docker pull kubernetesui/metrics-scraper:${dashboardMetricsScraperVer} && \
-    docker save -o ${imageDir}/metrics-scraper_${dashboardMetricsScraperVer}.tar kubernetesui/metrics-scraper:${dashboardMetricsScraperVer}
+    docker pull kubernetesui/metrics-scraper-arm64:${dashboardMetricsScraperVer} && \
+    docker save -o ${imageDir}/metrics-scraper_${dashboardMetricsScraperVer}.tar kubernetesui/metrics-scraper-arm64:${dashboardMetricsScraperVer}
   fi
   if [[ ! -f "$imageDir/metrics-server_$metricsVer.tar" ]];then
     docker pull mirrorgooglecontainers/metrics-server-arm64:${metricsVer} && \
     docker save -o ${imageDir}/metrics-server_${metricsVer}.tar mirrorgooglecontainers/metrics-server-arm64:${metricsVer}
   fi
   if [[ ! -f "$imageDir/pause_$pauseVer.tar" ]];then
-    docker pull r6w9c7qa.mirror.aliyuncs.com/kubesphere/pause:${pauseVer} && \
-    docker save -o ${imageDir}/pause_${pauseVer}.tar r6w9c7qa.mirror.aliyuncs.com/kubesphere/pause:${pauseVer}
+    docker pull r6w9c7qa.mirror.aliyuncs.com/kubesphere/pause-arm64:${pauseVer} && \
+    docker save -o ${imageDir}/pause_${pauseVer}.tar r6w9c7qa.mirror.aliyuncs.com/kubesphere/pause-arm64:${pauseVer}
     /bin/cp -u "${imageDir}/pause_${pauseVer}.tar" "${imageDir}/pause.tar"
   fi
   if [[ ! -f "$imageDir/kubeasz_$KUBEASZ_VER.tar" ]];then
