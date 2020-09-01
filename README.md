@@ -9,8 +9,8 @@ git clone https://github.com/hknarutofk/kubeasz-arm64.git
 
 cd kubeasz-arm64
 cp etc/ansible/ /etc/ -r
-easzup -D
-easzup -S
+sh easzup -D
+sh easzup -S
 docker exec -it kubeasz easzctl start-aio
 
 
