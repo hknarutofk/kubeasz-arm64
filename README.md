@@ -11,9 +11,17 @@ cd kubeasz-arm64
 cp etc/ansible/ /etc/ -r
 sh easzup -D
 sh easzup -S
+```
+
+## 单机安装
+```
 docker exec -it kubeasz easzctl start-aio
+```
 
-
+## 集群安装
+编辑/etc/ansible/hosts文件，然后执行
+```
+docker exec -it kubeasz easzctl setup
 ```
 # 验证安装
 如果提示kubectl: command not found，退出重新ssh登录一下，环境变量生效即可

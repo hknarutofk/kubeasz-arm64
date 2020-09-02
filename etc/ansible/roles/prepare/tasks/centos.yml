@@ -28,6 +28,7 @@
       - psmisc              # 安装psmisc 才能使用命令killall，keepalive的监测脚本需要
       - rsync               # 文件同步工具，分发证书等配置文件需要
       - socat               # 用于port forwarding
+      - libselinux-python   # 用于禁用selinux
     state: present
   when: 'INSTALL_SOURCE != "offline"'
 
