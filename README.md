@@ -31,3 +31,14 @@ $ kubectl get node        # 验证节点就绪 (Ready) 状态
 $ kubectl get pod -A      # 验证集群pod状态，默认已安装网络插件、coredns、metrics-server等
 $ kubectl get svc -A      # 验证集群服务状态
 ```
+
+
+# 添加节点
+
+https://github.com/easzlab/kubeasz/blob/master/docs/op/op-node.md
+
+```
+yum install -y epel-release
+yum install -y ansible python-netaddr
+/etc/ansible/tools/easzctl add-node 192.168.1.2
+```
