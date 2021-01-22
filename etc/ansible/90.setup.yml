@@ -1,13 +1,3 @@
-# prepare tasks for all nodes
-- hosts:
-  - kube-master
-  - kube-node
-  - etcd
-  - ex-lb
-  roles:
-  - prepare
-
-
 # [optional] to synchronize time of nodes with 'chrony'
 - hosts:
   - kube-master
@@ -22,6 +12,14 @@
 - hosts: localhost
   roles:
   - deploy
+
+# prepare tasks for all nodes
+- hosts:
+  - kube-master
+  - kube-node
+  - etcd
+  roles:
+  - prepare
 
 # to install etcd cluster
 - hosts: etcd
@@ -72,3 +70,4 @@
   - kube-node
   roles:
   - cluster-addon
+
